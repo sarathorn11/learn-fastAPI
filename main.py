@@ -4,12 +4,25 @@ app = FastAPI()
 
 
 @app.get("/")
-async def main():
-    return {'data': {'name':'Sarath'}}
+def index():
+    return {'data': {'blog list'}}
 
-@app.get("/about")
-def about():
-    return {'data':{'about'}}
+# why I put unpublished functions on show function.
+#  because in fastAPI it exicute code line by line
+@app.get("/blog/unpublished")
+def unpublished():
+    return {'data': {'unpublished'}}
+
+
+@app.get("/blog/{id}")
+def show(id:int):
+    # fetch a blog with id
+    return {'data':id}
+
+@app.get("/blog/{id}/comments")
+def comment(id:int):
+    # fetch a blog with comment
+    return {'data': {'1','2'}}
 
 
 if __name__ == '__main__':
