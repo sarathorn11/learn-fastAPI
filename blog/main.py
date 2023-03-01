@@ -14,7 +14,7 @@ def get_db():
         yield db
     finally:
         db.close()
-
+# add blog by id by Sarath on 01/03/2023
 @app.post('/blog',status_code=status.HTTP_201_CREATED)
 def create(request:schemas.Blog,db: Session = Depends(get_db)):
     new_blog = models.Blog(title=request.title, body=request.body)
@@ -22,19 +22,19 @@ def create(request:schemas.Blog,db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_blog)
     return new_blog
-
+# get all blog by id by Sarath on 01/03/2023
 @app.get('/blog')
 def all(db:Session = Depends(get_db)):
     blogs = db.query(models.Blog).all()
     return blogs
-
+# delete blog by id by Sarath on 01/03/2023
 @app.delete('/blog/{id}',status_code=status.HTTP_204_NO_CONTENT)
 def destroy(id,db:Session = Depends(get_db)):
     db.query(models.Blog).filter(models.Blog.id == id).delete(synchronize_session=False)
 
     db.commit()
     return 'done'
-
+# update blog by id by Sarath on 01/03/2023
 @app.put('/blog/{id}',status_code=status.HTTP_202_ACCEPTED)
 def update(id, request:schemas.Blog ,db:Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id)
@@ -45,7 +45,7 @@ def update(id, request:schemas.Blog ,db:Session = Depends(get_db)):
     return 'updated'
 
 
-
+# get blog by id by Sarath on 01/03/2023
 @app.get('/blog/{id}',status_code=200)
 def show(id,response:Response,db:Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id).first()
