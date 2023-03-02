@@ -1,15 +1,18 @@
 from pydantic import BaseModel
+from typing import List
 
+ 
 
-class Blog(BaseModel):
+class BlogBase(BaseModel):
     title:str
     body:str
 
-
-# create model /// ShowBlog(Blog) is ment ShowBlog is extended from Blog
-class ShowBlog(Blog):
+class Blog(BlogBase):
     class Config():
         orm_mode = True
+
+
+
 
 class ShowTitleBlog(BaseModel):
     title:str
@@ -25,6 +28,12 @@ class User(BaseModel):
 class ShowUser(BaseModel):
     name:str
     email:str
+    blogs: List[Blog]=[]
+    class Config():
+        orm_mode = True
 
+# create model /// ShowBlog(Blog) is ment ShowBlog is extended from Blog
+class ShowBlog(Blog):
+    creator: ShowUser
     class Config():
         orm_mode = True
